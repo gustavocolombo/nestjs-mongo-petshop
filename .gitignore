@@ -14,7 +14,7 @@ lerna-debug.log*
 
 # OS
 .DS_Store
-
+src/shared/documentation/constants.ts
 # Tests
 /coverage
 /.nyc_output
