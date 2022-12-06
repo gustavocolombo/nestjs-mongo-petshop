@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AnimalsModule } from './modules/animals/animals.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -14,6 +15,7 @@ import { UsersModule } from './modules/users/users.module';
       }),
     }),
     UsersModule,
+    AnimalsModule,
   ],
   controllers: [],
   providers: [],
