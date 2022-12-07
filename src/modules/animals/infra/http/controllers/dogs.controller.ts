@@ -7,8 +7,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateDogDTO } from '../../../dtos/create-dogs.dto';
-import { UpdateDogDTO } from '../../../dtos/update-dog.dto';
+import { CreateDogDTO } from '../../../dtos/dogs/create-dogs.dto';
+import { UpdateDogDTO } from '../../../dtos/dogs/update-dog.dto';
 import { DogsService } from '../../services/mongodb/dogs.service';
 
 @Controller('animals/dogs')

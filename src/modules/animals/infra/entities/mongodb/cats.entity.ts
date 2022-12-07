@@ -2,16 +2,16 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Animals } from './animals.entity';
 
-export type DogsDocument = HydratedDocument<Dogs>;
+export type CatsDocument = HydratedDocument<Cats>;
 
 @Schema()
-export class Dogs extends Animals {
+export class Cats extends Animals {
   _id: mongoose.Schema.Types.ObjectId;
 
   @Prop({ required: false, default: 4 })
   paws?: number;
 
-  @Prop({ default: 'dog', required: false })
+  @Prop({ default: 'cat', required: false })
   specie: string;
 
   @Prop({ required: true })
@@ -21,4 +21,4 @@ export class Dogs extends Animals {
   coatColor: string;
 }
 
-export const DogsSchema = SchemaFactory.createForClass(Dogs);
+export const CatsSchema = SchemaFactory.createForClass(Cats);

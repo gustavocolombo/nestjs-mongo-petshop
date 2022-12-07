@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateDogDTO } from '../../../dtos/create-dogs.dto';
-import { UpdateDogDTO } from '../../../dtos/update-dog.dto';
+import { CreateDogDTO } from '../../../dtos/dogs/create-dogs.dto';
+import { UpdateDogDTO } from '../../../dtos/dogs/update-dog.dto';
 import { Dogs, DogsDocument } from '../../entities/mongodb/dogs.entity';
 
 @Injectable()
@@ -28,14 +28,16 @@ export class DogsService {
   }
 
   async update(updatedDogDTO: UpdateDogDTO): Promise<Dogs> {
-    const dog = await this.dogsModel.findById(updatedDogDTO.id).exec();
+    const dog = await this.dogsModel.findOne({ _id: updatedDogDTO.id }).exec();
 
     if (!dog) throw new BadRequestException('Dog was not found');
 
-    await this.dogsModel.updateOne({
-      _id: updatedDogDTO.id,
-      ...updatedDogDTO,
-    });
+    await this.dogsModel.updateOne(
+      { _id: dog.id },
+      {
+        ...updatedDogDTO,
+      },
+    );
 
     return await this.dogsModel.findById(dog.id).exec();
   }
