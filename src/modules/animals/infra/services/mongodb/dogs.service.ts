@@ -16,19 +16,19 @@ export class DogsService {
   }
 
   async show(): Promise<Dogs[] | []> {
-    const dogs = await this.dogsModel.find();
+    const dogs = await this.dogsModel.find().exec();
 
     return dogs || [];
   }
 
   async index(id: string): Promise<Dogs | []> {
-    const dog = await this.dogsModel.findById(id);
+    const dog = await this.dogsModel.findById(id).exec();
 
     return dog || [];
   }
 
   async update(updatedDogDTO: UpdateDogDTO): Promise<Dogs> {
-    const dog = await this.dogsModel.findById(updatedDogDTO.id);
+    const dog = await this.dogsModel.findById(updatedDogDTO.id).exec();
 
     if (!dog) throw new BadRequestException('Dog was not found');
 
@@ -37,11 +37,11 @@ export class DogsService {
       ...updatedDogDTO,
     });
 
-    return await this.dogsModel.findById(dog.id);
+    return await this.dogsModel.findById(dog.id).exec();
   }
 
   async delete(id: string): Promise<boolean> {
-    const dog = await this.dogsModel.findById(id);
+    const dog = await this.dogsModel.findById(id).exec();
 
     if (!dog) throw new BadRequestException('Dog was not found');
 
