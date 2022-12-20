@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Animals } from '../../infra/entities/mongodb/animals.entity';
 
-export class CreateCatDTO extends Animals {
+export class CreateBirdDTO extends Animals {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -22,7 +22,7 @@ export class CreateCatDTO extends Animals {
   @IsNotEmpty()
   race: string;
 
-  @IsString()
-  @IsNotEmpty()
-  coatColor: string;
+  @IsNumber()
+  @IsOptional()
+  wings?: number;
 }
