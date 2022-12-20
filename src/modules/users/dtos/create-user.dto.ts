@@ -30,4 +30,28 @@ export class CreateUserDTO {
   @IsNumber()
   @IsNotEmpty()
   age: number;
+
+  @IsString()
+  @IsNotEmpty()
+  street: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  number: number;
+
+  @IsString()
+  @IsNotEmpty()
+  neighbourhood: string;
+
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @IsString()
+  @IsNotEmpty()
+  state: string;
+
+  @IsString()
+  @IsNotEmpty()
+  zipCode: string;
 }

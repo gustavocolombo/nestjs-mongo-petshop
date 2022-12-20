@@ -4,11 +4,18 @@ import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { CreateUserDTO } from '../../../dtos/create-user.dto';
 import { UpdateUserDTO } from '../../../dtos/update-user.dto';
+import {
+  Address,
+  AddressDocument,
+} from '../../entities/mongodb/address.entity';
 import { User, UserDocument } from '../../entities/mongodb/users.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Address.name) private addressModel: Model<AddressDocument>,
+  ) {}
 
   async create(createUserDTO: CreateUserDTO): Promise<any> {
     let user = await this.userModel.findOne({
@@ -22,11 +29,19 @@ export class UsersService {
       ...createUserDTO,
     });
 
-    user.save();
+    const address = await this.addressModel.create({
+      state: createUserDTO.state,
+      city: createUserDTO.city,
+      number: createUserDTO.number,
+      neighbourhood: createUserDTO.neighbourhood,
+      zipCode: createUserDTO.zipCode,
+      street: createUserDTO.street,
+      user: user.id,
+    });
 
     delete user.password;
 
-    return user;
+    return Object.assign(user, { address: address });
   }
 
   async index(id: string): Promise<User | null> {
