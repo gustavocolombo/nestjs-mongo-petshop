@@ -24,12 +24,14 @@ export class UsersService {
 
     if (user) throw new BadRequestException('User with e-mail already exists');
 
+    const hashedPass = await hash(createUserDTO.password, 8);
+
     user = await this.userModel.create({
-      password: await hash(createUserDTO.password, 8),
       ...createUserDTO,
+      password: hashedPass,
     });
 
-    const address = await this.addressModel.create({
+    await this.addressModel.create({
       state: createUserDTO.state,
       city: createUserDTO.city,
       number: createUserDTO.number,
@@ -41,7 +43,7 @@ export class UsersService {
 
     delete user.password;
 
-    return Object.assign(user, { address: address });
+    return user;
   }
 
   async index(id: string): Promise<User | null> {
